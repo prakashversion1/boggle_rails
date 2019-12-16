@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-
+import MainBoard from "../components/MainBoard";
 class App extends Component {
   render() {
-    return <h1>Hello world from react</h1>;
+    return <MainBoard />;
   }
 }
 
