@@ -1,8 +1,16 @@
 import React, { Component } from "react";
 import GameBoard from "../components/GameBoard";
 import ScoreBoard from "../components/ScoreBoard";
-import { getRandomBoard, isDiceEqual, isAdjacent } from "../utils/StringUtils";
+import {
+  getRandomBoard,
+  isDiceEqual,
+  isAdjacent,
+  verifyWord,
+  checkIfWordExists
+} from "../utils/StringUtils";
 import CurrentWord from "../components/CurrentWord";
+import ResetBoard from "../components/ResetBoard";
+import Submit from "../components/Submit";
 import clonedeep from "lodash/cloneDeep";
 
 class MainBoard extends Component {
@@ -12,25 +20,30 @@ class MainBoard extends Component {
     this.state = {
       board: this.initBoard,
       currentWordPosition: [],
-      selectedWord: ""
+      selectedWord: "",
+      wordScoreList: []
     };
   }
 
-  handleDiceClick = (rowId, columnId) => {
+  handleDiceClick(rowId, columnId) {
     console.log(`You have clicked ${rowId} and ${columnId}`);
     const newDice = this.state.board[rowId][columnId];
     const lastSelectedDice = this.state.currentWordPosition[
-      this.state.currentWordPosition - 1
+      this.state.currentWordPosition.length - 1
     ];
     // two conditions (1 if selected tile is slected and if new tile is selected)
-    if (isDiceEqual(newDice, lastSelectedDice)) {
-      let newBoard = clonedeep(this.state.board);
-      newBoard[rowId][columnId].selected = false;
-      this.setState({
-        currentWordPosition: this.state.currentWordPosition.slice(0, -1),
-        board: newBoard,
-        currentWordPosition: this.state.currentWordPosition.slice(0, -1)
-      });
+    if (newDice.selected) {
+      console.log("Selected word selected");
+      if (isDiceEqual(newDice, lastSelectedDice)) {
+        console.log("Same word selected");
+        let newBoard = clonedeep(this.state.board);
+        newBoard[rowId][columnId].selected = false;
+        this.setState({
+          selectedWord: this.state.selectedWord.slice(0, -1),
+          board: newBoard,
+          currentWordPosition: this.state.currentWordPosition.slice(0, -1)
+        });
+      }
     } else {
       if (!lastSelectedDice || isAdjacent(newDice, lastSelectedDice)) {
         let newBoard = clonedeep(this.state.board);
@@ -47,17 +60,48 @@ class MainBoard extends Component {
         });
       }
     }
-  };
+  }
+
+  handleScoreVerification() {
+    console.log("word verification clicked");
+    if (checkIfWordExists(this.state.selectedWord, this.state.wordScoreList)) {
+      return;
+    }
+    const verificationObject = verifyWord(this.state.selectedWord);
+    if (verificationObject.score == 0) {
+      return;
+    }
+    const resetBoard = this.initBoard;
+    this.setState({
+      wordScoreList: this.state.wordScoreList.concat(verificationObject),
+      board: resetBoard,
+      currentWordPosition: [],
+      selectedWord: ""
+    });
+  }
+
+  handleBoardReset() {
+    this.initBoard = getRandomBoard();
+    this.setState({
+      board: this.initBoard,
+      currentWordPosition: [],
+      selectedWord: ""
+    });
+  }
 
   render() {
     return (
       <div>
         <GameBoard
           board={this.state.board}
-          handleDiceClick={this.handleDiceClick}
+          handleDiceClick={this.handleDiceClick.bind(this)}
         />
-        <CurrentWord />
-        <ScoreBoard />
+        <CurrentWord currentWord={this.state.selectedWord} />
+        <Submit
+          handleScoreVerification={this.handleScoreVerification.bind(this)}
+        />
+        <ResetBoard handleBoardReset={this.handleBoardReset.bind(this)} />
+        <ScoreBoard wordScoreList={this.state.wordScoreList} />
       </div>
     );
   }

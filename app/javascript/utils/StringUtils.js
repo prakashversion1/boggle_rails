@@ -68,3 +68,30 @@ export const copyBoard = board => {
   });
   return copiedBoard;
 };
+
+//temporary word calculator. Need to reset it with proper api
+export const verifyWord = word => {
+  let wordObject = {
+    word: word,
+    score: 0
+  };
+  if (word.length < 3) {
+    wordObject.score = 0;
+  } else if (word.length > 2 && word.length < 6) {
+    wordObject.score = word.length - 2;
+  } else {
+    wordObject.score = 4;
+  }
+  return wordObject;
+};
+
+export const checkIfWordExists = (word, wordScoreList) => {
+  const redundantWord = wordScoreList.filter(
+    wordObject => wordObject.word === word
+  );
+  if (redundantWord) {
+    return false;
+  } else {
+    return true;
+  }
+};

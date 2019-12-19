@@ -3,9 +3,6 @@ import React, { Component } from "react";
 class GameBoard extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      handleDiceClick: this.props.handleDiceClick
-    };
   }
 
   generateTiles(side) {
@@ -13,7 +10,7 @@ class GameBoard extends Component {
       <button
         className={side.selected ? "tile-selected" : "tile"}
         key={side.colId + side.rowId}
-        onClick={() => this.state.handleDiceClick(side.rowId, side.colId)}
+        onClick={() => this.props.handleDiceClick(side.rowId, side.colId)}
       >
         {side.letter}
       </button>
