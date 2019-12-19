@@ -1,4 +1,6 @@
 //Function to generate a random 4*4 array with letters. This is a respresentation of a board
+import DiceData from "./DiceData";
+
 export const getRandomBoard = () => {
   let counter = 0;
   let gameBoard = [];
@@ -7,7 +9,8 @@ export const getRandomBoard = () => {
     for (let j = 0; j < 4; j++) {
       const dice = dices[counter];
       const side = getRandomSide(dice);
-      row[j] = side;
+      const diceData = new DiceData(side, i, j);
+      row[j] = diceData;
       counter += 1;
     }
     gameBoard[i] = row;
@@ -39,4 +42,29 @@ const dices = [
 const getRandomSide = dice => {
   const randomIndex = Math.floor(Math.random() * dice.length);
   return dice[randomIndex];
+};
+
+export const isDiceEqual = (dice1, dice2) => {
+  if (!dice1 || !dice2) return false;
+  return dice1.rowId === dice2.rowId && dice2.colId === dice1.colId;
+};
+
+export const isAdjacent = (dice1, dice2) => {
+  if (!dice1 || !dice2) return false;
+  const colDiff = Math.abs(dice1.colId - dice2.colId);
+  const rowDiff = Math.abs(dice1.rowId - dice2.rowId);
+  if (colDiff <= 1 && rowDiff <= 1) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export const copyBoard = board => {
+  const copiedBoard = board.map(row => {
+    return row.map(tile => {
+      return tile.clone();
+    });
+  });
+  return copiedBoard;
 };
