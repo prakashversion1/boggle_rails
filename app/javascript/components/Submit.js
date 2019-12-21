@@ -8,7 +8,7 @@ class Submit extends Component {
   render() {
     return (
       <button
-        className="button"
+        className="submit-button"
         onClick={() => this.props.handleScoreVerification()}
       >
         Submit

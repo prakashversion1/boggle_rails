@@ -6,7 +6,7 @@ class App extends Component {
       <div className="container">
         <div className="header">
           <span>
-            <h1>Boggle</h1> <h2>Game of the year edition</h2>
+            <h1>Boggle</h1>
           </span>
         </div>
         <MainBoard />

@@ -8,8 +8,8 @@ class CurrentWord extends Component {
   render() {
     return (
       <div className="word-area">
-        <div>Current Word</div>
-        <div>{this.props.currentWord}</div>
+        <div className="current-header">Current Word</div>
+        <div className="current-header">{this.props.currentWord}</div>
       </div>
     );
   }

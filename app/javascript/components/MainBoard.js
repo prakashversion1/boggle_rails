@@ -92,16 +92,21 @@ class MainBoard extends Component {
   render() {
     return (
       <div>
-        <GameBoard
-          board={this.state.board}
-          handleDiceClick={this.handleDiceClick.bind(this)}
-        />
-        <CurrentWord currentWord={this.state.selectedWord} />
-        <Submit
-          handleScoreVerification={this.handleScoreVerification.bind(this)}
-        />
-        <ResetBoard handleBoardReset={this.handleBoardReset.bind(this)} />
+        <div className="game-area">
+          <GameBoard
+            board={this.state.board}
+            handleDiceClick={this.handleDiceClick.bind(this)}
+          />
+          <CurrentWord currentWord={this.state.selectedWord} />
+          <div>
+            <Submit
+              handleScoreVerification={this.handleScoreVerification.bind(this)}
+            />
+            <ResetBoard handleBoardReset={this.handleBoardReset.bind(this)} />
+          </div>
+        </div>
         <ScoreBoard wordScoreList={this.state.wordScoreList} />
+        <div className="clear" />
       </div>
     );
   }

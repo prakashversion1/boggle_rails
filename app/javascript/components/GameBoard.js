@@ -19,7 +19,7 @@ class GameBoard extends Component {
 
   render() {
     return (
-      <div className="game-board-area">
+      <div className="orange-area">
         {this.props.board.map((row, index) => {
           return (
             <div className="row" key={index}>

@@ -7,8 +7,11 @@ class ResetBoard extends Component {
 
   render() {
     return (
-      <button className="reset" onClick={() => this.props.handleBoardReset()}>
-        Reset Board
+      <button
+        className="submit-reset"
+        onClick={() => this.props.handleBoardReset()}
+      >
+        Reset
       </button>
     );
   }
