@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_21_134401) do
+ActiveRecord::Schema.define(version: 2019_12_23_162302) do
+
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.integer "highscore", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "words", force: :cascade do |t|
     t.string "name"
