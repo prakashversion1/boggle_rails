@@ -51,6 +51,10 @@ class ScoreBoard extends Component {
             <h2>Total Score</h2>
             <span>{totalScore}</span>
           </div>
+          <div className="total-score">
+            <h2>High Score</h2>
+            <span>{this.props.highScore}</span>
+          </div>
         </div>
       </div>
     );

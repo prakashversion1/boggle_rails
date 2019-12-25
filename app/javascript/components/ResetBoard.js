@@ -10,8 +10,9 @@ class ResetBoard extends Component {
       <button
         className="submit-reset"
         onClick={() => this.props.handleBoardReset()}
+        title="Reset"
       >
-        Reset
+        <i className="fas fa-redo" />
       </button>
     );
   }

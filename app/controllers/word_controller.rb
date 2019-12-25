@@ -9,14 +9,14 @@ class WordController < ApplicationController
             render json: responseObject.to_json(), status: responseObject.status_code
             return
         end
-        @word = Word.find_by(name:search_text.downcase)
-        if(@word.nil?)
+        word = Word.find_by(name:search_text.downcase)
+        if(word.nil?)
             logger.info "Word not found in database"
             responseObject = Response.new(Messages::SEARCH_NOT_FOUND,Constants::STATUS_NOT_FOUND, nil)
             render json: responseObject.to_json(), status: responseObject.status_code
             return
         end 
-            responseObject = Response.new(Messages::SEARCH_SUCCESS,Constants::STATUS_OK,@word.calculate_score) 
+            responseObject = Response.new(Messages::SEARCH_SUCCESS,Constants::STATUS_OK,word.calculate_score) 
             render json: responseObject.to_json(), status: responseObject.status_code
             return
     end

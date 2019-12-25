@@ -1,5 +1,6 @@
 //Function to generate a random 4*4 array with letters. This is a respresentation of a board
 import DiceData from "./DiceData";
+import Axios from "axios";
 
 export const getRandomBoard = () => {
   let counter = 0;
@@ -71,18 +72,11 @@ export const copyBoard = board => {
 
 //temporary word calculator. Need to reset it with proper api
 export const verifyWord = word => {
-  let wordObject = {
-    word: word,
-    score: 0
-  };
   if (word.length < 3) {
-    wordObject.score = 0;
-  } else if (word.length > 2 && word.length < 6) {
-    wordObject.score = word.length - 2;
+    return false;
   } else {
-    wordObject.score = 4;
+    return true;
   }
-  return wordObject;
 };
 
 export const checkIfWordExists = (word, wordScoreList) => {

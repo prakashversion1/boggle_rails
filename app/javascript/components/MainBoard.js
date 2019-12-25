@@ -5,13 +5,15 @@ import {
   getRandomBoard,
   isDiceEqual,
   isAdjacent,
-  verifyWord,
-  checkIfWordExists
+  verifyWord
 } from "../utils/StringUtils";
 import CurrentWord from "../components/CurrentWord";
 import ResetBoard from "../components/ResetBoard";
 import Submit from "../components/Submit";
 import clonedeep from "lodash/cloneDeep";
+import { connect } from "react-redux";
+import { getWordVerification, getUserResponse } from "../actions/index";
+import Login from "../components/Login";
 
 class MainBoard extends Component {
   constructor(props) {
@@ -20,9 +22,9 @@ class MainBoard extends Component {
     this.state = {
       board: this.initBoard,
       currentWordPosition: [],
-      selectedWord: "",
-      wordScoreList: []
+      selectedWord: ""
     };
+    this.userDetail = null;
   }
 
   handleDiceClick(rowId, columnId) {
@@ -64,20 +66,17 @@ class MainBoard extends Component {
 
   handleScoreVerification() {
     console.log("word verification clicked");
-    if (checkIfWordExists(this.state.selectedWord, this.state.wordScoreList)) {
+    const word = this.state.selectedWord;
+    if (!verifyWord(word)) {
       return;
     }
-    const verificationObject = verifyWord(this.state.selectedWord);
-    if (verificationObject.score == 0) {
-      return;
-    }
-    const resetBoard = this.initBoard;
+    this.props.dispatch(getWordVerification(word));
     this.setState({
-      wordScoreList: this.state.wordScoreList.concat(verificationObject),
-      board: resetBoard,
+      board: this.initBoard,
       currentWordPosition: [],
       selectedWord: ""
     });
+    console.log(this.state);
   }
 
   handleBoardReset() {
@@ -89,7 +88,16 @@ class MainBoard extends Component {
     });
   }
 
+  getUserDetails(userName) {
+    console.log("user details clicked");
+    this.props.dispatch(getUserResponse(userName));
+  }
+
   render() {
+    console.log(this.props);
+    if (this.props.userDetail == null) {
+      return <Login getUserDetails={name => this.getUserDetails(name)} />;
+    }
     return (
       <div>
         <div className="game-area">
@@ -105,11 +113,19 @@ class MainBoard extends Component {
             <ResetBoard handleBoardReset={this.handleBoardReset.bind(this)} />
           </div>
         </div>
-        <ScoreBoard wordScoreList={this.state.wordScoreList} />
+        <ScoreBoard
+          wordScoreList={this.props.wordScoreList}
+          highScore={this.props.userDetail.score}
+        />
         <div className="clear" />
       </div>
     );
   }
 }
 
-export default MainBoard;
+const mapStateToProps = store => ({
+  wordScoreList: store.searchReducer.wordScoreList,
+  userDetail: store.userReducer.userDetail
+});
+
+export default connect(mapStateToProps)(MainBoard);
