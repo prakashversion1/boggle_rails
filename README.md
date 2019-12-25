@@ -19,10 +19,11 @@ To reduce complexcity in developer machine sqlite is left as default database in
 Please follow the following steps :
 
 1. Clone the repo using : `git clone [repo_url]`
-2. Change to the directory and run cammand : `rails bundle`
-3. Run rails migration using command : `rails db:migrate`
-4. Load seed data from data/enable.txt using command : `rails db:seed`. Please note the data should take around 1 min to load so please be patient. Even with batch insersion SQL-Lite takes quite a time to load around 170,000 distinct words.
-5. Finally start the application using command : `rails s`
+2. Change to the directory and run cammand : `bundle`
+3. Install js dependencies using : `yarn install`
+4. Run rails migration using command : `rails db:migrate`
+5. Load seed data from data/enable.txt using command : `rails db:seed`. Please note the data should take around 3 min to load so please be patient. Even with batch insersion SQL-Lite takes quite a time to load around 172,823 distinct words.
+6. Finally start the application using command : `rails s`
 
 Application should be viewable at url [http://localhost:3000/]().
 
