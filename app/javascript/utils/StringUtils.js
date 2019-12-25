@@ -89,3 +89,14 @@ export const checkIfWordExists = (word, wordScoreList) => {
     return true;
   }
 };
+
+export const getConfirmationMessage = (newScore, oldScore) => {
+  let message = "";
+  if (newScore == oldScore) {
+    message = "Congrats you've outdone yourself with new high score. ";
+  } else {
+    message = "Better luck next time. ";
+  }
+  message = message + "Do you want to continue free play or Start a new game ?";
+  return message;
+};

@@ -5,15 +5,24 @@ import {
   getRandomBoard,
   isDiceEqual,
   isAdjacent,
-  verifyWord
+  verifyWord,
+  getConfirmationMessage
 } from "../utils/StringUtils";
 import CurrentWord from "../components/CurrentWord";
 import ResetBoard from "../components/ResetBoard";
 import Submit from "../components/Submit";
 import clonedeep from "lodash/cloneDeep";
 import { connect } from "react-redux";
-import { getWordVerification, getUserResponse } from "../actions/index";
+import {
+  getWordVerification,
+  getUserResponse,
+  postUserHighScore,
+  resetWordList
+} from "../actions/index";
 import Login from "../components/Login";
+import Timer from "../components/Timer";
+import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
 class MainBoard extends Component {
   constructor(props) {
@@ -22,7 +31,8 @@ class MainBoard extends Component {
     this.state = {
       board: this.initBoard,
       currentWordPosition: [],
-      selectedWord: ""
+      selectedWord: "",
+      resetTimerkey: 1
     };
     this.userDetail = null;
   }
@@ -93,6 +103,54 @@ class MainBoard extends Component {
     this.props.dispatch(getUserResponse(userName));
   }
 
+  handleTimeUp() {
+    console.log("time up beep beep");
+    let newScore = 0;
+    const userName = this.props.userDetail.userName;
+    if (this.props.wordScoreList.length < 1) {
+      newScore = 0;
+    } else
+      newScore = this.props.wordScoreList
+        .map(o => o.score)
+        .reduce((a, c) => {
+          return a + c;
+        });
+    console.log(`Posting data for ${userName} with score ${newScore}`);
+    const scoreObject = { userName: userName, newScore: newScore };
+    this.props.dispatch(postUserHighScore(scoreObject));
+    confirmAlert({
+      title: "BEEP BEEP Time's UP",
+      message: getConfirmationMessage(
+        newScore,
+        this.props.userDetail.highScore
+      ),
+      buttons: [
+        {
+          label: "Free Play",
+          onClick: () => this.continue()
+        },
+        {
+          label: "New Game",
+          onClick: () => this.resetGame()
+        }
+      ],
+      closeOnClickOutside: false
+    });
+  }
+
+  continue() {
+    this.continue;
+  }
+
+  resetGame() {
+    const newKey = this.state.resetTimerkey + 1;
+    this.handleBoardReset();
+    this.setState({
+      resetTimerkey: newKey
+    });
+    this.props.dispatch(resetWordList());
+  }
+
   render() {
     console.log(this.props);
     if (this.props.userDetail == null) {
@@ -101,6 +159,11 @@ class MainBoard extends Component {
     return (
       <div>
         <div className="game-area">
+          <Timer
+            startCount={10}
+            handleTimeUp={() => this.handleTimeUp()}
+            key={this.state.resetTimerkey}
+          />
           <GameBoard
             board={this.state.board}
             handleDiceClick={this.handleDiceClick.bind(this)}
@@ -115,7 +178,7 @@ class MainBoard extends Component {
         </div>
         <ScoreBoard
           wordScoreList={this.props.wordScoreList}
-          highScore={this.props.userDetail.score}
+          highScore={this.props.userDetail.highScore}
         />
         <div className="clear" />
       </div>

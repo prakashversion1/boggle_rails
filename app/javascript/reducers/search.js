@@ -12,6 +12,10 @@ const searchReducer = (state = initialState, action) => {
         score: searchData.data.score
       });
       return newState;
+    case "RESET_WORDLIST":
+      console.log("resetting wordscore list");
+      newState.wordScoreList = [];
+      return newState;
     default:
       return state;
   }

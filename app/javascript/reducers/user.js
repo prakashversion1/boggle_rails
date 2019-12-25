@@ -8,8 +8,15 @@ const userReducer = (state = initialState, action) => {
     case "GET_USER_DETAIL_SUCCESS":
       const userData = action.payload;
       newState.userDetail = {
-        word: userData.data.userName,
-        score: userData.data.highScore
+        userName: userData.data.userName,
+        highScore: userData.data.highScore
+      };
+      return newState;
+    case "GET_HIGHSCORE_POST_SUCCESS":
+      const userInfo = action.payload;
+      newState.userDetail = {
+        userName: userInfo.data.userName,
+        highScore: userInfo.data.highScore
       };
       return newState;
     default:
