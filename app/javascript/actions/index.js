@@ -14,7 +14,6 @@ export const getWordVerification = word => dispatch => {
       });
     })
     .catch(error => {
-      console.log(error);
       toastr.options = {
         positionClass: "toast-top-center"
       };
@@ -35,7 +34,6 @@ export const getUserResponse = name => dispatch => {
       });
     })
     .catch(error => {
-      console.log(error);
       dispatch({
         type: "GET_USER_DETAIL_ERROR"
       });
@@ -53,7 +51,6 @@ export const postUserHighScore = scoreDetails => dispatch => {
       });
     })
     .catch(error => {
-      console.log(error);
       dispatch({
         type: "GET_HIGHSCORE_POST_ERROR"
       });

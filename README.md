@@ -11,8 +11,6 @@ The major version of libraries and languages are :
 - React : 16.12.0
 - Redux : 4.0.5
 
-# Libraries used
-
 # Installation and setup
 
 To reduce complexcity in developer machine sqlite is left as default database in the application.
@@ -44,3 +42,9 @@ Project uses following libraries to test react part of the application:
 Please run the command to run existing test cases : `npm test`
 
 ## Rails:
+
+Rails simply uses the rails-spec testing framework to run it's tests. Please run the command `rspec`
+
+## TODO
+
+1. Current test coverage is very low. Increase the test coverage.

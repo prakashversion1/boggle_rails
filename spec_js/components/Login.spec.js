@@ -11,22 +11,3 @@ describe("Login Component", () => {
     );
   });
 });
-
-describe("function", () => {
-  let handleSubmit;
-  beforeAll(() => {
-    handleSubmit = jest
-      .spyOn(Login.prototype, "handleSubmit")
-      .mockImplementation(() => true);
-  });
-  afterAll(() => {
-    Login.prototype.handleSubmit.mockRestore();
-  });
-  const wrapper1 = mount(<Login />);
-  it("should call handleSubmit", () => {
-    const btn = wrapper1.find(".form-button").at(0);
-    console.log(handleSubmit);
-    btn.simulate("click");
-    expect(handleSubmit).toHaveBeenCalledTimes(1);
-  });
-});

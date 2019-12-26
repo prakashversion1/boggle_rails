@@ -12,7 +12,6 @@ describe("Search Reducer", () => {
 
     it("should fetch correct word", () => {
       const newState = searchReducer(state, getWords);
-      console.log(newState);
       expect(newState.wordScoreList).toEqual(payloadData);
     });
   });

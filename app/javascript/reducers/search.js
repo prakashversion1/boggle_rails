@@ -7,14 +7,12 @@ const searchReducer = (state = initialState, action) => {
   switch (action.type) {
     case "GET_WORD_SEARCH_SUCCESS":
       const searchData = action.payload;
-      console.log(JSON.stringify(searchData));
       newState.wordScoreList.push({
         word: searchData.data.word,
         score: searchData.data.score
       });
       return newState;
     case "RESET_WORDLIST":
-      console.log("resetting wordscore list");
       newState.wordScoreList = [];
       return newState;
     default:

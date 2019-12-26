@@ -29,7 +29,6 @@ class Timer extends Component {
   doIntervalChange = () => {
     this.myInterval = setInterval(() => {
       if (this.state.count == 1) {
-        console.log("Timer in seconds : ", this.state.count);
         this.props.handleTimeUp();
         clearInterval(this.myInterval);
       }
