@@ -3,7 +3,8 @@ class Timer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      count: 1
+      count: 1,
+      class: "black"
     };
   }
 
@@ -12,7 +13,7 @@ class Timer extends Component {
     return (
       <div>
         <h2>
-          Time remaining : <b>{count}</b> sec
+          Time remaining :<b className={this.state.class}>{count}</b>
         </h2>
       </div>
     );
@@ -33,6 +34,12 @@ class Timer extends Component {
         clearInterval(this.myInterval);
       }
       const newCount = this.state.count - 1;
+      if (this.state.count == 30) {
+        console.log(`30 second has been reached`);
+        this.setState({
+          class: "warning-red"
+        });
+      }
       this.setState({
         count: newCount >= 0 ? newCount : 0
       });

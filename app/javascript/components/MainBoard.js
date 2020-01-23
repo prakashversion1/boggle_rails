@@ -151,7 +151,7 @@ class MainBoard extends Component {
       <div>
         <div className="game-area">
           <Timer
-            startCount={60}
+            startCount={40}
             handleTimeUp={() => this.handleTimeUp()}
             key={this.state.resetTimerkey}
           />

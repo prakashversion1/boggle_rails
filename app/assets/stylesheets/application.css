@@ -293,3 +293,8 @@ h2 {
 .react-confirm-alert-body {
   border: 1px solid #ccc;
 }
+
+.warning-red {
+  color: red;
+  font-size: ;
+}
